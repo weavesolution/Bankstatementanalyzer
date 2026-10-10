@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bank Statement Summary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap top-in">
+    <div class="brand">
+      <span class="mark">₹</span>
+      <div>
+        <h1>Bank Statement Summary</h1>
+        <p>PDF statements are read inside your browser. Nothing is uploaded to any server.</p>
+      </div>
+    </div>
+    <div class="top-actions">
+      <button id="btnExcel" class="btn primary" disabled>Download Excel</button>
+      <button id="btnClear" class="btn ghost" disabled>Clear</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section id="drop" class="drop" tabindex="0">
+    <input id="file" type="file" accept="application/pdf,.pdf" multiple hidden>
+    <div class="drop-in">
+      <strong>Drop bank statement PDFs here</strong>
+      <span>or <u>browse</u> — select several accounts at once</span>
+      <small>Tested formats: Axis Bank (Neo), IDBI Bank, Indian Overseas Bank, Punjab National Bank. Other text-based statements with a Date / Description / Debit-Credit / Balance table usually work too.</small>
+    </div>
+  </section>
+
+  <section id="files" class="files"></section>
+
+  <section id="results" hidden>
+    <div class="settings">
+      <label for="ownKw">Own-company keywords <span class="hint">(used to tag transfers between your own accounts; comma separated)</span></label>
+      <div class="row">
+        <input id="ownKw" type="text" placeholder="e.g. DYNAMIC SERV, SELF">
+        <button id="btnApply" class="btn">Apply</button>
+      </div>
+    </div>
+
+    <div id="cards" class="cards"></div>
+
+    <h2>Account-wise summary</h2>
+    <div class="tbl-wrap"><table id="tblAccounts" class="tbl"></table></div>
+
+    <div class="two">
+      <div>
+        <h2>Category summary</h2>
+        <div class="tbl-wrap"><table id="tblCats" class="tbl"></table></div>
+      </div>
+      <div>
+        <h2>Top counterparties</h2>
+        <div class="tbl-wrap"><table id="tblParties" class="tbl"></table></div>
+      </div>
+    </div>
+
+    <h2>Transactions</h2>
+    <div class="filters">
+      <select id="fAcc"></select>
+      <select id="fType">
+        <option value="">Debits &amp; credits</option>
+        <option value="cr">Credits only</option>
+        <option value="dr">Debits only</option>
+      </select>
+      <select id="fCat"></select>
+      <input id="fSearch" type="search" placeholder="Search description / counterparty">
+      <span id="fCount" class="muted"></span>
+    </div>
+    <div class="tbl-wrap tall"><table id="tblTxns" class="tbl"></table></div>
+  </section>
+</main>
+
+<footer class="wrap foot">Runs entirely client-side (pdf.js + SheetJS). Always cross-check totals with the bank's own figures.</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="js/parser.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
